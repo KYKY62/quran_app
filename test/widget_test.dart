@@ -5,26 +5,36 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'dart:convert';
 
-import 'package:quran_app/main.dart';
+import "package:http/http.dart" as http;
+import 'package:quran_app/data/models/surah.dart';
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+void main() async {
+  Surah surah;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  var url = Uri.parse("https://api.quran.gading.dev/surah/");
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  var response = await http.get(
+    url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  var data = jsonDecode(response.body);
+  print(data['data'][0]);
+
+  surah = Surah.fromJson(data);
+  print(surah);
+  print(surah.data[0].number);
+  print("-------------");
+  print(surah.data[0].sequence);
+  print("-------------");
+  print(surah.data[0].numberOfVerses);
+  print("-------------");
+  print(surah.data[0].name.long);
+
+  var dataannas = (json.decode(response.body) as Map<String, dynamic>)['code'];
+  print(dataannas);
 }

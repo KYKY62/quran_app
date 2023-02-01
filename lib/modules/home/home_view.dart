@@ -16,31 +16,42 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FLoatingWidget(
-            size: 50,
-            color: cardColor,
-            imageAsset: 'assets/bookIcon.png',
-          ),
-          const SizedBox(
-            width: 60.0,
-          ),
-          FLoatingWidget(
-            size: 70,
-            color: primaryColor,
-            imageAsset: 'assets/quranIcon.png',
-          ),
-          const SizedBox(
-            width: 60.0,
-          ),
-          FLoatingWidget(
-            size: 70,
-            color: cardColor,
-            imageAsset: 'assets/prayertimeIcon.png',
-          ),
-        ],
+      floatingActionButton: Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FLoatingWidget(
+              onTap: () {
+                homeC.isSelected.value = 1;
+              },
+              size: homeC.isSelected.value == 1 ? 70 : 60,
+              color: homeC.isSelected.value == 1 ? primaryColor : cardColor,
+              imageAsset: 'assets/bookIcon.png',
+            ),
+            const SizedBox(
+              width: 60.0,
+            ),
+            FLoatingWidget(
+              onTap: () {
+                homeC.isSelected.value = 2;
+              },
+              size: homeC.isSelected.value == 2 ? 70 : 60,
+              color: homeC.isSelected.value == 2 ? primaryColor : cardColor,
+              imageAsset: 'assets/quranIcon.png',
+            ),
+            const SizedBox(
+              width: 60.0,
+            ),
+            FLoatingWidget(
+              onTap: () {
+                homeC.isSelected.value = 3;
+              },
+              size: homeC.isSelected.value == 3 ? 70 : 60,
+              color: homeC.isSelected.value == 3 ? primaryColor : cardColor,
+              imageAsset: 'assets/prayertimeIcon.png',
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
         backgroundColor: backgroundColor,
