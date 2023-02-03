@@ -10,6 +10,9 @@ Color textColor = const Color(0xffDAD0E1);
 TextStyle primaryTextStyle = GoogleFonts.poppins(
   color: primaryColor,
 );
+TextStyle arabicTextStyle = GoogleFonts.lateef(
+  color: primaryColor,
+);
 TextStyle highlightTextStyle = GoogleFonts.poppins(
   color: hightlightColor,
   fontWeight: FontWeight.bold,

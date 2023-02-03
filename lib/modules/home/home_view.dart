@@ -26,7 +26,9 @@ class HomeView extends StatelessWidget {
               },
               size: homeC.isSelected.value == 1 ? 70 : 60,
               color: homeC.isSelected.value == 1 ? primaryColor : cardColor,
-              imageAsset: 'assets/bookIcon.png',
+              imageAsset: homeC.isSelected.value == 1
+                  ? 'assets/bookIcon_active.png'
+                  : 'assets/bookIcon.png',
             ),
             const SizedBox(
               width: 60.0,
@@ -37,7 +39,9 @@ class HomeView extends StatelessWidget {
               },
               size: homeC.isSelected.value == 2 ? 70 : 60,
               color: homeC.isSelected.value == 2 ? primaryColor : cardColor,
-              imageAsset: 'assets/quranIcon.png',
+              imageAsset: homeC.isSelected.value == 2
+                  ? 'assets/quranIcon_active.png'
+                  : 'assets/quranIcon.png',
             ),
             const SizedBox(
               width: 60.0,
@@ -48,7 +52,9 @@ class HomeView extends StatelessWidget {
               },
               size: homeC.isSelected.value == 3 ? 70 : 60,
               color: homeC.isSelected.value == 3 ? primaryColor : cardColor,
-              imageAsset: 'assets/prayertimeIcon.png',
+              imageAsset: homeC.isSelected.value == 3
+                  ? 'assets/prayertimeIcon_active.png'
+                  : 'assets/prayertimeIcon.png',
             ),
           ],
         ),
@@ -65,7 +71,6 @@ class HomeView extends StatelessWidget {
           "Quran App",
           style: primaryTextStyle.copyWith(fontSize: 24, fontWeight: bold),
         ),
-        actions: const [],
       ),
       body: DefaultTabController(
         length: 4,
