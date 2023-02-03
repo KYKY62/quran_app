@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quran_app/modules/detail_surah/controller/detail_ayat_controller.dart';
 import 'package:quran_app/theme/theme.dart';
 
 class DetailSurah extends StatelessWidget {
-  const DetailSurah({
+  final homeC = Get.arguments;
+  final detailayatC = Get.put(DetailAyatController());
+  DetailSurah({
     required this.title,
     required this.verse,
     required this.translation,
-    required this.verseCount,
     super.key,
   });
 
   final String title;
   final String verse;
   final String translation;
-  final int verseCount;
 
   @override
   Widget build(BuildContext context) {
@@ -90,38 +91,48 @@ class DetailSurah extends StatelessWidget {
             const SizedBox(
               height: 18.0,
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: verseCount,
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "مِيحِرَّلٱ نِٰـمَحْرَّلٱ هِلَّلٱ مِسْبِ",
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Text(
-                        "In the Name of Allah-the Most Compassionate, Most Merciful",
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 27.0,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            )
+            FutureBuilder(
+              future: detailayatC.getdata(homeC.toString()),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: detailayatC.detailayat.data!.verses.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            detailayatC
+                                .detailayat.data!.verses[index].text.arab,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          Text(
+                            detailayatC
+                                .detailayat.data!.verses[index].translation.id,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 27.0,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -21,23 +21,19 @@ class SurahWidget extends StatelessWidget {
         return ListView.builder(
           itemCount: homeC.surah.data.length,
           itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.to(
-                      () => DetailSurah(
-                        title: homeC.surah.data[index].name.transliteration.id,
-                        verse:
-                            "Verse ${homeC.surah.data[index].numberOfVerses}",
-                        translation:
-                            homeC.surah.data[index].name.translation.en,
-                        verseCount: homeC.surah.data[index].numberOfVerses,
-                      ),
-                    );
-                  },
-                  child: Padding(
+            return GestureDetector(
+              onTap: () => Get.to(
+                arguments: homeC.surah.data[index].number,
+                () => DetailSurah(
+                  title: homeC.surah.data[index].name.transliteration.id,
+                  verse: "Verse ${homeC.surah.data[index].numberOfVerses}",
+                  translation: homeC.surah.data[index].name.translation.en,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 78.0, vertical: 23),
                     child: Row(
@@ -78,12 +74,12 @@ class SurahWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                Divider(
-                  color: hightlightColor,
-                  thickness: 1,
-                )
-              ],
+                  Divider(
+                    color: hightlightColor,
+                    thickness: 1,
+                  )
+                ],
+              ),
             );
           },
         );
