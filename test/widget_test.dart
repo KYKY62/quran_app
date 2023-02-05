@@ -9,9 +9,11 @@ import 'dart:convert';
 
 import "package:http/http.dart" as http;
 import 'package:quran_app/data/models/detail_ayat.dart';
+import 'package:quran_app/data/models/juz.dart';
 import 'package:quran_app/data/models/surah.dart';
 
 void main() async {
+  // ! --------------Get Detail Surah--------------------
   Surah surah;
 
   var url = Uri.parse("https://api.quran.gading.dev/surah/");
@@ -38,7 +40,9 @@ void main() async {
 
   var dataannas = (json.decode(response.body) as Map<String, dynamic>)['code'];
   // print(dataannas);
+  // ! --------------Akhir Get Detail Surah--------------------
 
+  // ! --------------Get Detail Ayat--------------------
   Detailayat detailayat;
 
   int index = 113;
@@ -50,7 +54,7 @@ void main() async {
       "Content-Type": "application/json",
     },
   );
-  print(urldetail);
+  // print(urldetail);
   // Map<String, dynamic> datas =
   //     (json.decode(responseDetail.body) as Map<String, dynamic>);
 
@@ -60,5 +64,18 @@ void main() async {
 
   detailayat = Detailayat.fromJson(datas);
 
-  print(detailayat.data!.verses);
+  // print(detailayat.data!.verses);
+  // ! --------------Akhir Get Detail Ayat--------------------
+  Juz juz;
+  int juzIndex = 1;
+  var urlJuz = Uri.parse("https://api.quran.gading.dev/juz/$juzIndex");
+  var responseJuz = await http.get(
+    urlJuz,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  );
+  var dataJuz = jsonDecode(responseJuz.body);
+  juz = Juz.fromJson(dataJuz);
+  print(juz.data!.juz.toString());
 }

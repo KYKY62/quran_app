@@ -26,8 +26,8 @@ class SurahWidget extends StatelessWidget {
                 arguments: homeC.surah.data[index].number,
                 () => DetailSurah(
                   title: homeC.surah.data[index].name.transliteration.id,
-                  verse: "Verse ${homeC.surah.data[index].numberOfVerses}",
-                  translation: homeC.surah.data[index].name.translation.en,
+                  verse: "${homeC.surah.data[index].numberOfVerses} Ayat",
+                  translation: homeC.surah.data[index].name.translation.id,
                 ),
               ),
               child: Column(
@@ -50,13 +50,13 @@ class SurahWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "Verse ${homeC.surah.data[index].numberOfVerses}",
+                                "${homeC.surah.data[index].numberOfVerses} Ayat",
                                 style: primaryTextStyle.copyWith(
                                   fontSize: 11,
                                 ),
                               ),
                               Text(
-                                homeC.surah.data[index].name.translation.en,
+                                homeC.surah.data[index].name.translation.id,
                                 style: primaryTextStyle.copyWith(
                                   fontSize: 11,
                                 ),

@@ -102,26 +102,43 @@ class DetailSurah extends StatelessWidget {
                     itemCount: detailayatC.detailayat.data!.verses.length,
                     itemBuilder: (context, index) {
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            detailayatC
-                                .detailayat.data!.verses[index].text.arab,
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${detailayatC.detailayat.data!.verses[index].number.inSurah}",
+                                style: primaryTextStyle,
+                              ),
+                              const SizedBox(
+                                width: 20.0,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  detailayatC
+                                      .detailayat.data!.verses[index].text.arab,
+                                  textAlign: TextAlign.right,
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 12.0,
                           ),
-                          Text(
-                            detailayatC
-                                .detailayat.data!.verses[index].translation.id,
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                                detailayatC.detailayat.data!.verses[index]
+                                    .translation.id,
+                                textAlign: TextAlign.justify,
+                                style: primaryTextStyle.copyWith(
+                                  fontSize: 16.0,
+                                )),
                           ),
                           const SizedBox(
                             height: 27.0,

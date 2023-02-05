@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quran_app/modules/home/controller/home_controller.dart';
 import 'package:quran_app/modules/home/utils/surah_widget.dart';
+import 'package:quran_app/modules/juz/juz_view.dart';
 
 import './utils/card_widget.dart';
 import './utils/floating_widget.dart';
@@ -108,13 +109,13 @@ class HomeView extends StatelessWidget {
                   Tab(text: "Hijb"),
                 ],
               ),
-              const Expanded(
+              Expanded(
                 child: TabBarView(
                   children: [
-                    SurahWidget(),
-                    Text("text"),
-                    Text("text"),
-                    Text("text"),
+                    const SurahWidget(),
+                    JuzView(),
+                    const Text("text"),
+                    const Text("text"),
                   ],
                 ),
               )
