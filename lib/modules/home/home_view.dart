@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quran_app/modules/home/controller/home_controller.dart';
 import 'package:quran_app/modules/home/utils/surah_widget.dart';
+import 'package:quran_app/modules/juz/controller/juz_controller.dart';
 import 'package:quran_app/modules/juz/juz_view.dart';
 
 import './utils/card_widget.dart';
@@ -9,11 +10,12 @@ import './utils/floating_widget.dart';
 import '../../theme/theme.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+  final homeC = Get.put(HomeController());
+  final juzC = Get.put(JuzController());
 
   @override
   Widget build(BuildContext context) {
-    final homeC = Get.put(HomeController());
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

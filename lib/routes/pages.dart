@@ -11,7 +11,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.home,
-      page: () => const HomeView(),
+      page: () => HomeView(),
     ),
   ];
 }

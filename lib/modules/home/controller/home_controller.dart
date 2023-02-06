@@ -20,4 +20,10 @@ class HomeController extends GetxController {
     getdata();
     super.onInit();
   }
+
+  @override
+  void dispose() {
+    getdata();
+    super.dispose();
+  }
 }
