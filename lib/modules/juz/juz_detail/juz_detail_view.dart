@@ -34,12 +34,16 @@ class JuzDetailView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               detailJuz.verses[index].number.inSurah == 1
-                  ? Container(
+                  ? SizedBox(
                       width: Get.width,
                       height: 70,
-                      decoration: const BoxDecoration(color: Colors.amber),
-                      child: const Center(
-                        child: Text("Ini awal surah"),
+                      child: Center(
+                        child: Text(
+                          "Awalan Surah",
+                          style: primaryTextStyle.copyWith(
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     )
                   : const SizedBox(),
@@ -49,7 +53,7 @@ class JuzDetailView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${detailJuz.verses[index].number.inQuran}",
+                      "${detailJuz.verses[index].number.inSurah}",
                       style: primaryTextStyle,
                     ),
                     const SizedBox(
