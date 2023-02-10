@@ -111,13 +111,13 @@ class HomeView extends StatelessWidget {
                   Tab(text: "Hijb"),
                 ],
               ),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   children: [
-                    const SurahWidget(),
+                    SurahWidget(),
                     JuzView(),
-                    const Text("text"),
-                    const Text("text"),
+                    Text("text"),
+                    Text("text"),
                   ],
                 ),
               )
