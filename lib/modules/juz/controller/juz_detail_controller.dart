@@ -1,26 +1,23 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:quran_app/data/models/detail_ayat.dart';
-import 'package:quran_app/data/services/service_detail_ayat.dart';
-import 'package:quran_app/modules/home/controller/home_controller.dart';
+import 'package:quran_app/data/models/juz.dart';
+import 'package:quran_app/data/services/service_juz.dart';
 
-class DetailAyatController extends GetxController {
-  final homeC = Get.put(HomeController());
-  final player = AudioPlayer();
-  Verse? lastVerse;
-
-  Detailayat detailayat = Detailayat();
-
-  getdata(String id) async {
-    await ServiceDetailAyat().getDetailSurah(id).then((value) {
-      detailayat = value;
+class JuzDetailController extends GetxController {
+  List<Juz> juz = [];
+  Future<List<Juz>> getJuz() async {
+    return await ServiceJuz().getJuz().then((value) {
+      return juz = value;
     });
   }
 
+  final player = AudioPlayer();
+  Verse? lastVerse;
   void stopAudioSurah(Verse ayat) async {
     try {
       await player.stop();
       ayat.isAudio = 'stop';
+
       update();
     } on PlayerException catch (e) {
       Get.defaultDialog(
@@ -88,15 +85,18 @@ class DetailAyatController extends GetxController {
     }
   }
 
-  void playAudioSurah(Verse? ayat) async {
-    if (ayat?.audio.primary != null) {
+  void playAudioSurah(Verse ayat) async {
+    if (ayat.audio?.primary != null) {
       lastVerse ??= ayat;
       lastVerse!.isAudio = 'stop';
       lastVerse = ayat;
       lastVerse!.isAudio = 'stop';
       try {
+        print(ayat.number?.inQuran);
+        print(lastVerse?.audio?.primary);
+
         await player.stop();
-        await player.setUrl(ayat!.audio.primary);
+        await player.setUrl(ayat.audio?.primary ?? '');
         ayat.isAudio = 'playing';
         update();
         await player.play();
