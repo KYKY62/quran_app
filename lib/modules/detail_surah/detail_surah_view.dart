@@ -4,17 +4,10 @@ import 'package:quran_app/modules/detail_surah/controller/detail_ayat_controller
 import 'package:quran_app/theme/theme.dart';
 
 class DetailSurah extends StatelessWidget {
-  final homeC = Get.arguments;
   final detailayatC = Get.put(DetailAyatController());
   DetailSurah({
-    required this.title,
-    required this.verse,
-    required this.translation,
     super.key,
   });
-  final String title;
-  final String verse;
-  final String translation;
 
   @override
   Widget build(BuildContext context) {
@@ -43,75 +36,84 @@ class DetailSurah extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Material(
-              color: hightlightColor.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(12),
-                onTap: () {
-                  Get.defaultDialog(
-                    title: "Tafsir $title",
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    content: Text(
-                      "${detailayatC.detailayat.data?.tafsir.id}",
-                      textAlign: TextAlign.justify,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        style: primaryTextStyle.copyWith(
-                            fontSize: 18.0, fontWeight: bold),
-                      ),
-                      Row(
+      body: FutureBuilder(
+        future: detailayatC.getdata(Get.arguments['number'].toString()),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.none) {
+            return const Center(
+              child: Text("Tidak ada data"),
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Material(
+                  color: hightlightColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {
+                      Get.defaultDialog(
+                        title: "Tafsir ${Get.arguments['name']}",
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        content: Text(
+                          "${detailayatC.detailayat.data?.tafsir.id}",
+                          textAlign: TextAlign.justify,
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 10),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "$verse | $translation",
-                                  style:
-                                      primaryTextStyle.copyWith(fontSize: 13.0),
+                          Text(
+                            Get.arguments['name'],
+                            style: primaryTextStyle.copyWith(
+                                fontSize: 18.0, fontWeight: bold),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${Get.arguments['verse']} | ${Get.arguments['translation']}",
+                                      style: primaryTextStyle.copyWith(
+                                          fontSize: 13.0),
+                                    ),
+                                    Text(
+                                      "Tekan Untuk melihat Tafsir",
+                                      style: primaryTextStyle.copyWith(
+                                          fontSize: 13.0),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Tekan Untuk melihat Tafsir",
-                                  style:
-                                      primaryTextStyle.copyWith(fontSize: 13.0),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 18.0,
-            ),
-            FutureBuilder(
-              future: detailayatC.getdata(homeC.toString()),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return Expanded(
+                const SizedBox(
+                  height: 18.0,
+                ),
+                Expanded(
                   child: ListView.builder(
                     itemCount: detailayatC.detailayat.data!.verses.length,
                     itemBuilder: (context, index) {
@@ -255,11 +257,11 @@ class DetailSurah extends StatelessWidget {
                       );
                     },
                   ),
-                );
-              },
+                )
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

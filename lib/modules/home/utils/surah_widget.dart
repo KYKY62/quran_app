@@ -23,12 +23,13 @@ class SurahWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => Get.to(
-                arguments: homeC.surah.data[index].number,
-                () => DetailSurah(
-                  title: homeC.surah.data[index].name.transliteration.id,
-                  verse: "${homeC.surah.data[index].numberOfVerses} Ayat",
-                  translation: homeC.surah.data[index].name.translation.id,
-                ),
+                arguments: {
+                  'name': homeC.surah.data[index].name.transliteration.id,
+                  'verse': homeC.surah.data[index].numberOfVerses,
+                  'translation': homeC.surah.data[index].name.translation.id,
+                  'number': homeC.surah.data[index].number,
+                },
+                () => DetailSurah(),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
