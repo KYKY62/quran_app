@@ -92,15 +92,12 @@ class JuzDetailController extends GetxController {
       lastVerse = ayat;
       lastVerse!.isAudio = 'stop';
       try {
-        print(ayat.number?.inQuran);
-        print(lastVerse?.audio?.primary);
-
         await player.stop();
         await player.setUrl(ayat.audio?.primary ?? '');
         ayat.isAudio = 'playing';
         update();
         await player.play();
-        ayat.isAudio = 'stop';
+        ayat.isAudio = 'playing';
         await player.stop();
         update();
       } on PlayerException catch (e) {

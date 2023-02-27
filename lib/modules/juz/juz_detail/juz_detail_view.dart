@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quran_app/modules/juz/controller/juz_controller.dart';
 import 'package:quran_app/modules/juz/controller/juz_detail_controller.dart';
 
 import '../../../theme/theme.dart';
@@ -8,8 +7,7 @@ import '../../../theme/theme.dart';
 class JuzDetailView extends StatelessWidget {
   JuzDetailView({super.key});
   final detailJuz = Get.arguments;
-  final ayatC = Get.put(JuzController());
-  final coba = Get.put(JuzDetailController());
+  final juzDetailC = Get.put(JuzDetailController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,6 @@ class JuzDetailView extends StatelessWidget {
       body: ListView.builder(
         itemCount: detailJuz.verses.length,
         itemBuilder: (context, index) {
-          print(index);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,7 +82,7 @@ class JuzDetailView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        GetBuilder<JuzController>(
+                        GetBuilder<JuzDetailController>(
                           builder: (_) => Row(
                             children: [
                               Image.asset(
@@ -94,10 +91,10 @@ class JuzDetailView extends StatelessWidget {
                               const SizedBox(
                                 width: 32.0,
                               ),
-                              (detailJuz.verses?[index].isAudio == 'stop')
+                              (detailJuz.verses![index].isAudio == 'stop')
                                   ? GestureDetector(
                                       onTap: () {
-                                        coba.playAudioSurah(
+                                        juzDetailC.playAudioSurah(
                                             detailJuz.verses[index]);
                                       },
                                       child: Image.asset(
@@ -110,18 +107,14 @@ class JuzDetailView extends StatelessWidget {
                                                 'playing'
                                             ? GestureDetector(
                                                 onTap: () {
-                                                  coba.pauseAudioSurah(coba
-                                                      .juz[index]
-                                                      .data!
-                                                      .verses![index]);
+                                                  juzDetailC.pauseAudioSurah(
+                                                      detailJuz.verses[index]);
                                                 },
                                                 child: const Icon(Icons.pause))
                                             : GestureDetector(
                                                 onTap: () {
-                                                  coba.resumeAudioSurah(coba
-                                                      .juz[index]
-                                                      .data!
-                                                      .verses![index]);
+                                                  juzDetailC.resumeAudioSurah(
+                                                      detailJuz.verses[index]);
                                                 },
                                                 child: const Icon(
                                                     Icons.play_arrow),
@@ -131,8 +124,8 @@ class JuzDetailView extends StatelessWidget {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            coba.stopAudioSurah(coba.juz[index]
-                                                .data!.verses![index]);
+                                            juzDetailC.stopAudioSurah(
+                                                detailJuz.verses[index]);
                                           },
                                           child: const Icon(Icons.stop),
                                         ),
