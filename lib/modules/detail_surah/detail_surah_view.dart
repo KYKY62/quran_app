@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quran_app/modules/detail_surah/controller/detail_ayat_controller.dart';
 import 'package:quran_app/theme/theme.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class DetailSurah extends StatelessWidget {
+  DetailSurah({super.key});
   final detailayatC = Get.put(DetailAyatController());
-  DetailSurah({
-    super.key,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -115,145 +114,161 @@ class DetailSurah extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
+                    controller: detailayatC.scroolcontroller,
                     itemCount: detailayatC.detailayat.data!.verses.length,
                     itemBuilder: (context, index) {
                       final detailAyat =
                           detailayatC.detailayat.data!.verses[index];
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: Get.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: hightlightColor.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Stack(
-                                      children: [
-                                        Image.asset(
-                                          'assets/border.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "${detailAyat.number.inSurah}",
-                                            style: primaryTextStyle,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  GetBuilder<DetailAyatController>(
-                                    builder: (_) => Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/shareIcon.png",
-                                        ),
-                                        const SizedBox(
-                                          width: 32.0,
-                                        ),
-                                        (detailAyat.isAudio == 'stop')
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  detailayatC.playAudioSurah(
-                                                      detailAyat);
-                                                },
-                                                child: Image.asset(
-                                                  "assets/playIcon.png",
-                                                ),
-                                              )
-                                            : Row(
-                                                children: [
-                                                  detailAyat.isAudio ==
-                                                          'playing'
-                                                      ? GestureDetector(
-                                                          onTap: () {
-                                                            detailayatC
-                                                                .pauseAudioSurah(
-                                                                    detailAyat);
-                                                          },
-                                                          child: const Icon(
-                                                              Icons.pause))
-                                                      : GestureDetector(
-                                                          onTap: () {
-                                                            detailayatC
-                                                                .resumeAudioSurah(
-                                                                    detailAyat);
-                                                          },
-                                                          child: const Icon(
-                                                              Icons.play_arrow),
-                                                        ),
-                                                  const SizedBox(
-                                                    width: 32.0,
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      detailayatC
-                                                          .stopAudioSurah(
-                                                              detailAyat);
-                                                    },
-                                                    child:
-                                                        const Icon(Icons.stop),
-                                                  ),
-                                                ],
-                                              ),
-                                        const SizedBox(
-                                          width: 32.0,
-                                        ),
-                                        Image.asset(
-                                          "assets/bookmarkIcon.png",
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                      return AutoScrollTag(
+                        key: ValueKey(index),
+                        controller: detailayatC.scroolcontroller,
+                        index: index,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: Get.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: hightlightColor.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  detailAyat.text.arab,
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                  ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: Stack(
+                                        children: [
+                                          Image.asset(
+                                            'assets/border.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "${detailAyat.number.inSurah}",
+                                              style: primaryTextStyle,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    GetBuilder<DetailAyatController>(
+                                      builder: (_) => Row(
+                                        children: [
+                                          Image.asset(
+                                            "assets/shareIcon.png",
+                                          ),
+                                          const SizedBox(
+                                            width: 32.0,
+                                          ),
+                                          (detailAyat.isAudio == 'stop')
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    detailayatC.playAudioSurah(
+                                                        detailAyat);
+                                                    detailayatC.scroolcontroller
+                                                        .scrollToIndex(
+                                                      index,
+                                                      duration: const Duration(
+                                                          seconds: 2),
+                                                      preferPosition:
+                                                          AutoScrollPosition
+                                                              .begin,
+                                                    );
+                                                  },
+                                                  child: Image.asset(
+                                                    "assets/playIcon.png",
+                                                  ),
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    detailAyat.isAudio ==
+                                                            'playing'
+                                                        ? GestureDetector(
+                                                            onTap: () {
+                                                              detailayatC
+                                                                  .pauseAudioSurah(
+                                                                      detailAyat);
+                                                            },
+                                                            child: const Icon(
+                                                                Icons.pause))
+                                                        : GestureDetector(
+                                                            onTap: () {
+                                                              detailayatC
+                                                                  .resumeAudioSurah(
+                                                                      detailAyat);
+                                                            },
+                                                            child: const Icon(
+                                                                Icons
+                                                                    .play_arrow),
+                                                          ),
+                                                    const SizedBox(
+                                                      width: 32.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        detailayatC
+                                                            .stopAudioSurah(
+                                                                detailAyat);
+                                                      },
+                                                      child: const Icon(
+                                                          Icons.stop),
+                                                    ),
+                                                  ],
+                                                ),
+                                          const SizedBox(
+                                            width: 32.0,
+                                          ),
+                                          Image.asset(
+                                            "assets/bookmarkIcon.png",
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: Text(detailAyat.translation.id,
-                                textAlign: TextAlign.justify,
-                                style: primaryTextStyle.copyWith(
-                                  fontSize: 16.0,
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 27.0,
-                          ),
-                        ],
+                            ),
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    detailAyat.text.arab,
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Text(detailAyat.translation.id,
+                                  textAlign: TextAlign.justify,
+                                  style: primaryTextStyle.copyWith(
+                                    fontSize: 16.0,
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: 27.0,
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),

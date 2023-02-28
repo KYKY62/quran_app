@@ -36,6 +36,7 @@ dependencies:
   google_fonts: ^4.0.1
   http: ^0.13.5
   just_audio: ^0.9.31
+  scroll_to_index: ^3.0.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

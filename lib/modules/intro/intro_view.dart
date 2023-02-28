@@ -59,7 +59,7 @@ class IntroView extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 30,
-                    left: Get.width / 3.5,
+                    left: Get.width / 4,
                     child: Material(
                       color: hightlightColor,
                       borderRadius: BorderRadius.circular(40),

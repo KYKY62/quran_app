@@ -17,7 +17,6 @@ class JuzDetailController extends GetxController {
     try {
       await player.stop();
       ayat.isAudio = 'stop';
-
       update();
     } on PlayerException catch (e) {
       Get.defaultDialog(
@@ -97,7 +96,7 @@ class JuzDetailController extends GetxController {
         ayat.isAudio = 'playing';
         update();
         await player.play();
-        ayat.isAudio = 'playing';
+        ayat.isAudio = 'stop';
         await player.stop();
         update();
       } on PlayerException catch (e) {
