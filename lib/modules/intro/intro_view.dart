@@ -33,12 +33,13 @@ class IntroView extends StatelessWidget {
               height: 41.0,
             ),
             SizedBox(
+              width: double.infinity,
               height: 488,
               child: Stack(
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
-                    width: Get.width,
+                    width: double.infinity,
                     height: 437,
                     decoration: BoxDecoration(
                       color: primaryColor,
@@ -53,13 +54,11 @@ class IntroView extends StatelessWidget {
                     ),
                     child: Image.asset(
                       "assets/mosque.png",
-                      width: 100,
-                      height: 318,
                     ),
                   ),
                   Positioned(
                     bottom: 30,
-                    left: Get.width / 4,
+                    left: 90,
                     child: Material(
                       color: hightlightColor,
                       borderRadius: BorderRadius.circular(40),

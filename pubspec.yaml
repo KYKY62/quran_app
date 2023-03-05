@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.12.0
   get: ^4.6.5
   google_fonts: ^4.0.1
   http: ^0.13.5
@@ -43,6 +44,22 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/iconApp.png"
+  web:
+    generate: true
+    image_path: "assets/iconApp.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/iconApp.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/iconApp.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
