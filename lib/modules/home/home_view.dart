@@ -64,10 +64,13 @@ class HomeView extends StatelessWidget {
       ),
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        leading: Image.asset(
-          "assets/menuIcon.png",
-          width: 10,
-          height: 10,
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: Image.asset(
+            "assets/menuIcon.png",
+            width: 10,
+            height: 10,
+          ),
         ),
         elevation: 0,
         title: Text(

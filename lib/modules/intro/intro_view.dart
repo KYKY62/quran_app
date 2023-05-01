@@ -63,7 +63,7 @@ class IntroView extends StatelessWidget {
                       color: hightlightColor,
                       borderRadius: BorderRadius.circular(40),
                       child: InkWell(
-                        onTap: () => Get.offNamed(Routes.home),
+                        onTap: () => Get.offNamed(Routes.menu),
                         borderRadius: BorderRadius.circular(40),
                         child: SizedBox(
                           width: 183,
