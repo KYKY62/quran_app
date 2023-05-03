@@ -5,6 +5,7 @@ Color cardColor = const Color(0xffE5B6F2);
 Color hightlightColor = const Color(0xff9D1DF2);
 Color primaryColor = const Color(0xff300759);
 Color backgroundColor = const Color(0xffDAD0E1);
+Color backgroundColor1 = const Color.fromARGB(116, 218, 208, 225);
 Color textColor = const Color(0xffDAD0E1);
 
 TextStyle primaryTextStyle = GoogleFonts.poppins(

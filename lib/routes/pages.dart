@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:quran_app/bindings/jadwal_shalat_binding.dart';
 import 'package:quran_app/modules/home/home_view.dart';
 import 'package:quran_app/modules/intro/intro_view.dart';
 import 'package:quran_app/modules/jadwal_shalat/jadwal_shalat_view.dart';
@@ -21,7 +22,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.jadwalShalat,
-      page: () => const JadwalShalatView(),
+      page: () => JadwalShalatView(),
+      binding: JadwalShalatBinding(),
     ),
   ];
 }
