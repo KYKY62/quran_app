@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -32,4 +34,51 @@ class JadwalShalatController extends GetxController {
   String formattedasrTime = DateFormat('HH:mm').format(asrTime);
   String formattedmaghribTime = DateFormat('HH:mm').format(maghribTime);
   String formattedishaTime = DateFormat('HH:mm').format(ishaTime);
+
+  RxInt timeDifference = 0.obs;
+  var prayerName = 'null'.obs;
+
+  @override
+  void onInit() {
+    // Harus di onInit biar jalan
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      // Update Waktu
+      DateTime currentTime = DateTime.now();
+      // waktu setelah Shalat
+      Duration difffajrTime = fajrTime.difference(currentTime);
+      Duration diffdhuhrTime = dhuhrTime.difference(currentTime);
+      Duration diffasrTime = asrTime.difference(currentTime);
+      Duration diffmaghribTime = maghribTime.difference(currentTime);
+      Duration diffishaTime = ishaTime.difference(currentTime);
+
+      var fajrTimePassed = difffajrTime.inMinutes.abs();
+      var dhuhrTimePassed = diffdhuhrTime.inMinutes.abs();
+      var asrTimePassed = diffasrTime.inMinutes.abs();
+      var maghribTimePassed = diffmaghribTime.inMinutes.abs();
+      var ishaTimePassed = diffishaTime.inMinutes.abs();
+
+      // Logika jika Waktu shalat telah berlalu
+      if (currentTime.isAfter(fajrTime) && currentTime.isBefore(dhuhrTime)) {
+        timeDifference.value = fajrTimePassed;
+        prayerName.value = 'Subuh';
+      } else if (currentTime.isAfter(dhuhrTime) &&
+          currentTime.isBefore(asrTime)) {
+        timeDifference.value = dhuhrTimePassed;
+        prayerName.value = 'Dzuhur';
+      } else if (currentTime.isAfter(asrTime) &&
+          currentTime.isBefore(maghribTime)) {
+        timeDifference.value = asrTimePassed;
+        prayerName.value = 'Ashar';
+      } else if (currentTime.isAfter(maghribTime) &&
+          currentTime.isBefore(ishaTime)) {
+        timeDifference.value = maghribTimePassed;
+        prayerName.value = 'Maghrib';
+      } else if (currentTime.isAfter(ishaTime)) {
+        timeDifference.value = ishaTimePassed;
+        prayerName.value = 'Isya';
+      }
+    });
+
+    super.onInit();
+  }
 }
