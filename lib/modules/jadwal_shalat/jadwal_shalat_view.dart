@@ -21,18 +21,23 @@ class JadwalShalatView extends StatelessWidget {
           ),
           backgroundColor: backgroundColor,
           elevation: 0,
-          title: Text(
-            "Medan Johor",
-            style: primaryTextStyle.copyWith(
-              fontSize: 16,
+          title: Obx(
+            () => Text(
+              jadwalShalatC.locationName.value,
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+              ),
             ),
           ),
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Icon(
-                Icons.location_on,
-                color: primaryColor,
+              child: InkWell(
+                onTap: () => jadwalShalatC.getCurrentLocation(),
+                child: Icon(
+                  Icons.location_on,
+                  color: primaryColor,
+                ),
               ),
             ),
           ],
@@ -91,10 +96,15 @@ class JadwalShalatView extends StatelessWidget {
                   const SizedBox(
                     width: 5.0,
                   ),
-                  Text(
-                    "Medan Johor, Medan - Indonesia",
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 12,
+                  Obx(
+                    () => SizedBox(
+                      width: 250,
+                      child: Text(
+                        jadwalShalatC.locationDesc.value,
+                        style: primaryTextStyle.copyWith(
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ),
                 ],
